@@ -11,35 +11,31 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent, PropType } from "vue";
 import { Todo } from "../types/Todo";
 import AppTodoListItem from "./AppTodoListItem.vue";
 
-interface State {
-  todos: Todo[];
-}
 export default defineComponent({
   components: {
     AppTodoListItem,
   },
-  data(): State {
-    return {
-      todos: [
-        { id: 0, text: "Learn the basics of Vue", completed: true },
-        { id: 1, text: "Learn the basics of Typescript", completed: false },
-        { id: 2, text: "Subscribe to the channel", completed: false },
-      ],
-    };
+  props: {
+    todos: {
+      required: true,
+      type: Array as PropType<Todo[]>,
+    },
   },
   methods: {
     toggleTodo(id: number) {
-      this.todos.find((todo: Todo) =>
-        todo.id === id ? (todo.completed = !todo.completed) : null
-      );
+      this.$emit("toggleTodo", id);
     },
     deleteTodo(id: number) {
-      this.todos = this.todos.filter((todo: Todo) => todo.id !== id);
+      this.$emit("deleteTodo", id);
     },
+  },
+  emits: {
+    toggleTodo: (id: number) => Number.isInteger(id),
+    deleteTodo: (id: number) => Number.isInteger(id),
   },
 });
 </script>
