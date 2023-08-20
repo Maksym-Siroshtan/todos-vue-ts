@@ -34,8 +34,8 @@ export default defineComponent({
     },
   },
   emits: {
-    toggleTodo: (id: number) => Number.isInteger(id),
-    deleteTodo: (id: number) => Number.isInteger(id),
+    toggleTodo: (id: string) => typeof id === "string",
+    deleteTodo: (id: string) => typeof id === "string",
   },
 });
 </script>

@@ -26,16 +26,16 @@ export default defineComponent({
     },
   },
   methods: {
-    toggleTodo(id: number) {
+    toggleTodo(id: string) {
       this.$emit("toggleTodo", id);
     },
-    deleteTodo(id: number) {
+    deleteTodo(id: string) {
       this.$emit("deleteTodo", id);
     },
   },
   emits: {
-    toggleTodo: (id: number) => Number.isInteger(id),
-    deleteTodo: (id: number) => Number.isInteger(id),
+    toggleTodo: (id: string) => typeof id === "string",
+    deleteTodo: (id: string) => typeof id === "string",
   },
 });
 </script>

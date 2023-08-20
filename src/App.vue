@@ -1,11 +1,11 @@
 <template>
   <AppHeader />
 
-  <AppFilters />
+  <AppFilters :active-filter="activeFilter" @set-filter="setFilter" />
 
   <main class="app-main">
     <AppTodoList
-      :todos="todos"
+      :todos="filteredTodos"
       @toggle-todo="toggleTodo"
       @delete-todo="deleteTodo"
     />
@@ -18,6 +18,8 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import { Todo } from "./types/Todo";
+import { Filter } from "./types/Filter";
+import { generateTodos } from "./functions";
 
 import AppHeader from "./components/AppHeader.vue";
 import AppFilters from "./components/AppFilters.vue";
@@ -27,6 +29,7 @@ import AppFooter from "./components/AppFooter.vue";
 
 interface State {
   todos: Todo[];
+  activeFilter: Filter;
 }
 
 export default defineComponent({
@@ -39,24 +42,43 @@ export default defineComponent({
   },
   data(): State {
     return {
-      todos: [
-        { id: 0, text: "Learn the basics of Vue", completed: true },
-        { id: 1, text: "Learn the basics of Typescript", completed: false },
-        { id: 2, text: "Subscribe to the channel", completed: false },
-      ],
+      todos: generateTodos(),
+      activeFilter: "All",
     };
   },
+  computed: {
+    filteredTodos(): Todo[] {
+      switch (this.activeFilter) {
+        case "Active":
+          return this.active;
+        case "Done":
+          return this.done;
+        case "All":
+        default:
+          return this.todos;
+      }
+    },
+    active(): Todo[] {
+      return this.todos.filter((todo: Todo) => todo.completed === false);
+    },
+    done(): Todo[] {
+      return this.todos.filter((todo: Todo) => todo.completed);
+    },
+  },
   methods: {
-    toggleTodo(id: number) {
+    toggleTodo(id: string) {
       this.todos.find((todo: Todo) =>
         todo.id === id ? (todo.completed = !todo.completed) : null
       );
     },
-    deleteTodo(id: number) {
+    deleteTodo(id: string) {
       this.todos = this.todos.filter((todo: Todo) => todo.id !== id);
     },
     addNewTodo(todo: Todo) {
       this.todos.push(todo);
+    },
+    setFilter(filter: Filter) {
+      this.activeFilter = filter;
     },
   },
 });

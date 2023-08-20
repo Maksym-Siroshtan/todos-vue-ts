@@ -22,6 +22,7 @@
 </template>
 
 <script lang="ts">
+import { generateId } from "@/functions";
 import { Todo } from "@/types/Todo";
 import { defineComponent } from "vue";
 
@@ -46,7 +47,7 @@ export default defineComponent({
     },
     addNewTodo() {
       this.$emit("addNewTodo", {
-        id: Date.now(),
+        id: generateId(),
         text: this.todoText,
         completed: false,
       });
