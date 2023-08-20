@@ -3,7 +3,7 @@
 
 :root {
   --primary-color: #e30808;
-  --secondary-color: #e3e3e3;
+  --secondary-color: #b0abab;
   --light-color: #f0f0f0;
   --reverse-color: #ffffff;
   --default-color: #000000;
@@ -61,6 +61,9 @@ button {
   flex-direction: column;
   gap: 3.2rem;
   width: 34rem;
+  border: 1px solid var(--secondary-color);
+  border-radius: 16px;
+  padding: 20px;
 }
 
 .app-header {
@@ -168,7 +171,7 @@ button {
 }
 
 .todo-item:hover {
-  box-shadow: 0px 1px 20px rgb(240 240 240 / 80%);
+  box-shadow: 0px 1px 20px rgba(224, 215, 215, 0.8);
 }
 
 .todo-item__text {
@@ -247,7 +250,7 @@ button {
 }
 
 .add-todo__show-form-button:hover {
-  box-shadow: 0px 1px 20px rgb(240 240 240 / 80%);
+  box-shadow: 0px 1px 20px rgba(224, 215, 215, 0.8);
 }
 
 .add-todo__form {

@@ -12,12 +12,13 @@
     <AppAddTodo @add-new-todo="addNewTodo" />
   </main>
 
-  <AppFooter />
+  <AppFooter :stats="stats" />
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
 import { Todo } from "./types/Todo";
+import { Stats } from "./types/Stats";
 import { Filter } from "./types/Filter";
 import { generateTodos } from "./functions";
 
@@ -59,10 +60,16 @@ export default defineComponent({
       }
     },
     active(): Todo[] {
-      return this.todos.filter((todo: Todo) => todo.completed === false);
+      return this.todos.filter((todo: Todo) => !todo.completed);
     },
     done(): Todo[] {
       return this.todos.filter((todo: Todo) => todo.completed);
+    },
+    stats(): Stats {
+      return {
+        active: this.active.length,
+        done: this.done.length,
+      };
     },
   },
   methods: {

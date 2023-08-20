@@ -9,7 +9,7 @@
         <i class="bi bi-x"></i>
       </button>
       <div class="text-input text-input--focus">
-        <input v-model="todoText" class="input" />
+        <input v-model="todoText" class="input" placeholder="Enter a new task" />
       </div>
       <button :disabled="todoText.trim() === ''" class="button button--filled">
         Add task
@@ -22,7 +22,7 @@
 </template>
 
 <script lang="ts">
-import { generateId } from "@/functions";
+import { generateId, formattedText } from "@/functions";
 import { Todo } from "@/types/Todo";
 import { defineComponent } from "vue";
 
@@ -48,7 +48,7 @@ export default defineComponent({
     addNewTodo() {
       this.$emit("addNewTodo", {
         id: generateId(),
-        text: this.todoText,
+        text: formattedText(this.todoText),
         completed: false,
       });
 
